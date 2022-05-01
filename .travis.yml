@@ -1,0 +1,24 @@
+sudo: required
+language: generic
+
+services:
+  - docker
+
+before_install:
+  - docker build -t chang6chang/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true chang6chang/react-test npm test
+
+after_success:
+  - docker build -t chang6chang/multi-client  ./client
+  - docker build -t chang6chang/multi-nginx  ./nginx
+  - docker build -t chang6chang/multi-server  ./server
+  - docker build -t chang6chang/multi-worker  ./worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push chang6chnag/multi-client
+  - docker push chang6chnag/multi-nginx
+  - docker push chang6chnag/multi-server
+  - docker push chang6chnag/multi-worker
