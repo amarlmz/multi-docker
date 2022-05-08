@@ -17,7 +17,6 @@ after_success:
   - docker build -t amlmz/multi-worker  ./worker
 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-
   - docker push amlmz/multi-client
   - docker push amlmz/multi-nginx
   - docker push amlmz/multi-server
