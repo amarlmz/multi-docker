@@ -5,20 +5,20 @@ services:
   - docker
 
 before_install:
-  - docker build -t chang6chang/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t amlmz/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true chang6chang/react-test npm test
+  - docker run -e CI=true amlmz/react-test npm test
 
 after_success:
-  - docker build -t chang6chang/multi-client  ./client
-  - docker build -t chang6chang/multi-nginx  ./nginx
-  - docker build -t chang6chang/multi-server  ./server
-  - docker build -t chang6chang/multi-worker  ./worker
+  - docker build -t amlmz/multi-client  ./client
+  - docker build -t amlmz/multi-nginx  ./nginx
+  - docker build -t amlmz/multi-server  ./server
+  - docker build -t amlmz/multi-worker  ./worker
 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
-  - docker push chang6chang/multi-client
-  - docker push chang6chang/multi-nginx
-  - docker push chang6chang/multi-server
-  - docker push chang6chang/multi-worker
+  - docker push amlmz/multi-client
+  - docker push amlmz/multi-nginx
+  - docker push amlmz/multi-server
+  - docker push amlmz/multi-worker
